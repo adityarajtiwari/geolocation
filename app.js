@@ -1,6 +1,6 @@
 // Global variables
 // Common API base URL (override by setting window.API_BASE before app.js loads)
-const API_BASE = (typeof window !== 'undefined' && window.API_BASE) ? window.API_BASE.replace(/\/$/, '') : '';
+const API_BASE = 'https://geoloaction.onrender.com';
 let currentGeolocations = {};
 let currentSearchResults = [];
 let currentSingleSourceResults = [];
