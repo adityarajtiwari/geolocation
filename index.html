@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Geo Shopping Search</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1><i class="fas fa-shopping-cart"></i> Multi-Geo Shopping Search</h1>
+                <p>Search products across multiple countries with SerpAPI</p>
+            </div>
+            <div class="excel-status">
+                <span id="excel-count">0 items saved</span>
+                <button id="export-btn" class="btn btn-success" disabled>
+                    <i class="fas fa-download"></i> Export Excel
+                </button>
+                <button id="clear-btn" class="btn btn-danger" disabled>
+                    <i class="fas fa-trash"></i> Clear Data
+                </button>
+            </div>
+        </header>
+
+        <!-- Search Section -->
+        <section class="search-section">
+            <div class="search-form">
+                <div class="form-group">
+                    <label for="search-query">Search Query:</label>
+                    <input type="text" id="search-query" class="form-control" placeholder="Enter product search query...">
+                </div>
+                <div class="form-group">
+                    <label for="geolocation-select">Select Country:</label>
+                    <select id="geolocation-select" class="form-control">
+                        <option value="">Choose a country...</option>
+                    </select>
+                </div>
+                <div class="form-actions">
+                    <button id="translate-btn" class="btn btn-secondary">
+                        <i class="fas fa-language"></i> Translate
+                    </button>
+                    <button id="search-btn" class="btn btn-primary">
+                        <i class="fas fa-search"></i> Search
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Translation Display -->
+            <div class="translation-container" id="translation-container" style="display: none;">
+                <div class="translation-box">
+                    <div class="translation-header">
+                        <i class="fas fa-language"></i>
+                        <span id="translation-title">Translation</span>
+                        <button id="copy-translation-btn" class="copy-btn" title="Copy translation">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                    </div>
+                    <div class="translation-content">
+                        <div class="original-query">
+                            <label>Original:</label>
+                            <span id="original-query-text"></span>
+                        </div>
+                        <div class="translated-query">
+                            <label>Translated:</label>
+                            <span id="translated-query-text"></span>
+                        </div>
+                        <div class="translation-info">
+                            <small id="translation-language"></small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Loading Indicator -->
+        <div id="loading" class="loading hidden">
+            <div class="spinner"></div>
+            <p>Searching products...</p>
+        </div>
+
+        <!-- Search Results -->
+        <section id="results-section" class="results-section hidden">
+            <div class="results-header">
+                <h2 id="results-title">Search Results</h2>
+                <div class="results-info">
+                    <span id="results-count">0 products found</span>
+                    <span id="results-geo"></span>
+                </div>
+            </div>
+            
+            <!-- Product Type Tabs -->
+            <div class="product-tabs">
+                <button class="tab-btn active" data-tab="multiple-source">
+                    <i class="fas fa-store"></i> Multiple Sources
+                    <span id="multiple-source-count" class="tab-count">0</span>
+                </button>
+                <button class="tab-btn" data-tab="single-source">
+                    <i class="fas fa-shopping-bag"></i> Single Source
+                    <span id="single-source-count" class="tab-count">0</span>
+                </button>
+            </div>
+            
+            <!-- Multiple Source Products -->
+            <div id="multiple-source-tab" class="tab-content active">
+                <div class="tab-header">
+                    <h3><i class="fas fa-store"></i> Products with Multiple Sources</h3>
+                    <p class="tab-description">Products available from multiple sellers with price comparison</p>
+                </div>
+                <div id="multiple-source-grid" class="products-grid">
+                    <!-- Multiple source product cards will be inserted here -->
+                </div>
+            </div>
+            
+            <!-- Single Source Products -->
+            <div id="single-source-tab" class="tab-content">
+                <div class="tab-header">
+                    <h3><i class="fas fa-shopping-bag"></i> Products with Single Source</h3>
+                    <p class="tab-description">Products available from individual sellers</p>
+                </div>
+                <div id="single-source-grid" class="products-grid">
+                    <!-- Single source product cards will be inserted here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Product Details Modal -->
+        <div id="product-modal" class="modal hidden">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="modal-title">Product Details</h3>
+                    <button id="modal-close" class="modal-close">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="modal-loading" class="loading">
+                        <div class="spinner"></div>
+                        <p>Loading product details...</p>
+                    </div>
+                    <div id="modal-content" class="hidden">
+                        <!-- Product details will be inserted here -->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="modal-save-btn" class="btn btn-success">
+                        <i class="fas fa-save"></i> Save to Excel
+                    </button>
+                    <button id="modal-cancel-btn" class="btn btn-secondary">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Toast Notifications -->
+        <div id="toast-container" class="toast-container"></div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
